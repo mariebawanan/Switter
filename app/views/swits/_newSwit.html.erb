@@ -1,0 +1,42 @@
+<div class="card" >
+  <div class="card-content  default-primary-color ">
+    <div class="card-title  divider-color" >
+      <p><%= swit.user.username %> <small class ="secondary-text-color">   Switted <strong><%= time_ago_in_words(swit.created_at) %> ago</strong></small> </p>
+    </div>
+    
+    
+    <div class="card-content primary-text-color" >
+      <p><%= swit.content %></p>
+    </div>
+  </div>
+  
+  <div class="card-action text-primary-color  divider-color" style="height: 50px; padding-top: 7px;">
+    <%= link_to like_swit_path(swit), class: "primary-text-color", method: :get do %><span class = "secondary-text-color"> <%= swit.get_upvotes.size %></span>  Sweet <% end %>
+        
+    <%= link_to dislike_swit_path(swit), method: :get do %>  <span class = "secondary-text-color"> <%= swit.get_downvotes.size %></span>  Sour<% end %>
+    <a class="waves-effect accent-color btn comment-button" style="float: right">Comment</a>
+  </div>
+
+  <div class="card-action text-primary-color divider-color comments-div" style="height: 200px; padding-top: 7px;">
+  
+    <%= form_for :comment, :url => new_comment_path(swit), :method => "put"  do |f| %>
+      <div class="field">
+        <%= f.label :body %><br>
+        <%= f.text_area :body %>
+      </div>
+      <div class="hidden">
+        <%= f.label :user_id %><br>
+        <%= f.text_field :user_id, :value => current_user.id %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+  </div>
+
+  <% swit.comments.each do |comment| %>
+    <div class="card-action text-primary-color divider-color comments-div" style="height: 40px; padding-top: 7px;">
+      <%= comment.body %><small class = "secondary-text-color">   Submitted <strong><%= time_ago_in_words(comment.created_at) %> ago</strong> by <%= comment.user.username %></small>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,14 @@
+<div class ="container">
+<%= form_for @swit do |f| %>
+  <div class="hidden">
+    <%= f.label :user_id %>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content, :class=> "materialize-textarea", :length=>"140" %>
+  <div class="actions">
+    <%= f.submit 'Create Swit' , :class => 'btn'%>
+  </div>
+<% end %>
+</div>
